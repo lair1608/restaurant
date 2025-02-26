@@ -4,6 +4,8 @@ import LoginForm from './componentes/LoginForm';
 import Dashboard from './pages/Dashboard';
 import MenuPage from './pages/Menu';
 import { useAuth } from './context/AuthContext';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
   const { token } = useAuth();

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { Container, Row, Col, Form, Button, Card, Alert } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const LoginForm = () => {
   const { login } = useAuth();
@@ -20,26 +22,68 @@ const LoginForm = () => {
       login(response.data.token, response.data.user);
       navigate('/dashboard');
     } catch (err) {
-      setError('Credenciales inválidas');
+      setError('❌ Credenciales inválidas. Inténtalo de nuevo.');
     }
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: '0 auto', padding: '20px' }}>
-      <h2>Iniciar Sesión</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input type="email" name="email" value={form.email} onChange={handleChange} required />
-        </div>
-        <div>
-          <label>Contraseña:</label>
-          <input type="password" name="password" value={form.password} onChange={handleChange} required />
-        </div>
-        <button type="submit">Ingresar</button>
-      </form>
-    </div>
+    <Container className="d-flex align-items-center justify-content-center min-vh-100">
+      <Row className="w-100">
+        <Col md={{ span: 6, offset: 3 }}>
+          <Card className="shadow-lg">
+            <Card.Body>
+              <h2 className="text-center mb-4">Bienvenido</h2>
+              <p className="text-center text-muted">Inicia sesión para continuar</p>
+
+              {error && <Alert variant="danger">{error}</Alert>}
+
+              <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    name="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    required
+                    placeholder="ejemplo@correo.com"
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Contraseña</Form.Label>
+                  <Form.Control
+                    type="password"
+                    name="password"
+                    value={form.password}
+                    onChange={handleChange}
+                    required
+                    placeholder="••••••••"
+                  />
+                </Form.Group>
+
+                <Form.Group className="d-flex justify-content-between mb-3">
+                  <Form.Check type="checkbox" label="Recordarme" />
+                  <a href="#" className="text-primary">¿Olvidaste tu contraseña?</a>
+                </Form.Group>
+
+                <Button 
+                  type="submit" 
+                  variant="primary" 
+                  className="w-100"
+                >
+                  Iniciar Sesión
+                </Button>
+              </Form>
+
+              <div className="mt-3 text-center">
+                ¿No tienes una cuenta? <a href="#" className="text-primary">Regístrate</a>
+              </div>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
